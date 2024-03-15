@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Define styles for the book reviews page */
+/* Add Font Awesome styles */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+
+/* Define styles for the book reviews page */
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 40px 0;
+}
+header p {
+    font-style: italic;
+    font-size: 18px;
+}
+#general-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.book-card {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.book-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.book-card h3 {
+    color: #333;
+}
+.book-card p {
+    color: #666;
+}
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 24px;
+    color: #333;
+}
+.like-btn:hover {
+    color: #e74c3c; /* Change color on hover */
+}
+#add-review {
+    background-color: #fff;
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#add-review h2 {
+    color: #333;
+}
+#add-review label {
+    font-weight: bold;
+}
+#add-review input[type="text"],
+#add-review textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+#add-review input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#add-review input[type="submit"]:hover {
+    background-color: #666;
+}
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Reviews</h1>
+        <p>Read and share your reviews about the latest books</p>
+    </header>
+    <section id="general-content">
+        <h2>General Book Content</h2>
+        <div class="book-card">
+            <img style="width: 60%;height:60%;" src="https://m.media-amazon.com/images/I/91Q8YfcIqKL._AC_UF1000,1000_QL80_.jpg" alt="Book 1">
+            <h3>Book: Harry Potter</h3>
+            <p>Author: J.K Rowling</p>
+            <button class="like-btn"><i class="fas fa-heart"></i> Like</button>
+
+        </div>
+        <div class="book-card">
+            <img style="width: 60%;height:60%;"  src="https://m.media-amazon.com/images/I/81IzbD2IiIL._AC_UF1000,1000_QL80_.jpg" alt="Book 2">
+            <h3>Book Kite Runner</h3>
+            <p>Author: Khaled Hosseini </p>
+            
+            <button class="like-btn"><i class="fas fa-heart"></i> Like</button>
+
+        </div>
+        <!-- Add more book cards as needed -->
+    </section>
+    <section id="reviews">
+        <!-- Review Cards will be dynamically added here -->
+    </section>
+    <section id="add-review">
+        <h2>Add Your Review</h2>
+        <form id="reviewForm">
+            <label for="bookTitle">Book Title:</label>
+            <input type="text" id="bookTitle" name="bookTitle" required><br>
+            <label for="reviewText">Your Review:</label><br>
+            <textarea id="reviewText" name="reviewText" rows="4" cols="50" required></textarea><br>
+            <input type="submit" value="Submit Review">
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 Book Reviews</p>
+    </footer>
+    <script>
+        document.getElementById("reviewForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+        
+            // Get form values
+            var bookTitle = document.getElementById("bookTitle").value;
+            var reviewText = document.getElementById("reviewText").value;
+        
+            // Create a new review card
+            var reviewCard = document.createElement("div");
+            reviewCard.classList.add("review-card");
+        
+            // Populate review card with data
+            reviewCard.innerHTML = `
+                <h3>${bookTitle}</h3>
+                <p>${reviewText}</p>
+                <button class="like-btn">Like</button>
+                <button class="comment-btn">Comment</button>
+                <div class="comments"></div>
+            `;
+        
+            // Append review card to reviews section
+            document.getElementById("reviews").appendChild(reviewCard);
+        
+            // Reset form fields
+            document.getElementById("bookTitle").value = "";
+            document.getElementById("reviewText").value = "";
+        });
+        
+        // Add event listener for like button
+        document.addEventListener("click", function(event) {
+            if (event.target.classList.contains("like-btn")) {
+                var likeBtn = event.target;
+                var likes = likeBtn.dataset.likes ? parseInt(likeBtn.dataset.likes) : 0;
+                likes++;
+                likeBtn.textContent = `Liked (${likes})`;
+                likeBtn.dataset.likes = likes;
+            }
+        });
+    </script>
+</body>
+</html>
